@@ -27,13 +27,22 @@ Claude Code エージェントから本番 API を操作し、チャンネル作
 
 ```bash
 mise trust && mise install  # Node.js のインストール
-npm install                 # 依存関係のインストール
+pnpm install                # 依存関係のインストール
 ```
 
 ### ビルド
 
 ```bash
-npm run build
+pnpm build
+```
+
+## 開発
+
+```bash
+pnpm dev         # TypeScript のウォッチビルド
+pnpm test        # テスト実行
+pnpm test:watch  # テストのウォッチモード
+pnpm typecheck   # 型チェック
 ```
 
 ## 環境変数
@@ -86,16 +95,22 @@ npm run build
 
 ```
 .
-├── src/                 # ソースコード
-│   ├── index.ts         # エントリーポイント（MCP Server 起動）
-│   ├── tools/           # ツール定義
-│   └── client.ts        # anycast-backend HTTP クライアント
-├── docs/                # ドキュメント
-│   ├── adr/             # Architecture Decision Records
-│   └── specs/           # 設計仕様書
+├── src/
+│   ├── index.ts          # エントリーポイント（MCP Server 起動）
+│   ├── client.ts         # anycast-backend HTTP クライアント
+│   ├── types.ts          # API リクエスト/レスポンスの型定義
+│   ├── errors.ts         # エラーハンドリング
+│   └── tools/
+│       ├── index.ts      # 全ツール一括登録
+│       ├── channels.ts   # チャンネル系ツール
+│       ├── episodes.ts   # エピソード系ツール
+│       └── master.ts     # マスタデータ系ツール
+├── docs/
+│   ├── adr/              # Architecture Decision Records
+│   └── specs/            # 設計仕様書
 ├── package.json
 ├── tsconfig.json
-├── .mise.toml           # mise 設定（Node.js バージョン管理）
+├── .mise.toml            # mise 設定（Node.js バージョン管理）
 ├── README.md
 ├── CLAUDE.md
 └── AGENTS.md
