@@ -40,7 +40,7 @@ describe("AnycastClient", () => {
 
   describe("共通リクエスト処理", () => {
     it("認証ヘッダーを付与してリクエストする", async () => {
-      mockFetchResponse([]);
+      mockFetchResponse({ data: [] });
 
       await client.listChannels();
 
@@ -56,7 +56,7 @@ describe("AnycastClient", () => {
     });
 
     it("GET リクエストに Content-Type を付与しない", async () => {
-      mockFetchResponse([]);
+      mockFetchResponse({ data: [] });
 
       await client.listChannels();
 
@@ -67,7 +67,7 @@ describe("AnycastClient", () => {
 
     it("ベース URL の末尾スラッシュを除去する", async () => {
       const clientWithSlash = new AnycastClient(`${BASE_URL}/`, API_KEY);
-      mockFetchResponse([]);
+      mockFetchResponse({ data: [] });
 
       await clientWithSlash.listChannels();
 
@@ -89,7 +89,7 @@ describe("AnycastClient", () => {
         categoryId: "cat-1",
         characters: { create: [{ name: "Host", persona: "明るい", voiceId: "v-1" }] },
       };
-      mockFetchResponse({ id: "ch-1", ...channelData });
+      mockFetchResponse({ data: { id: "ch-1", ...channelData } });
 
       await client.createChannel(channelData);
 
@@ -106,7 +106,7 @@ describe("AnycastClient", () => {
   describe("チャンネル系", () => {
     it("listChannels: 一覧を取得する", async () => {
       const channels = [{ id: "ch-1", name: "Channel 1" }];
-      mockFetchResponse(channels);
+      mockFetchResponse({ data: channels });
 
       const result = await client.listChannels();
 
@@ -115,7 +115,7 @@ describe("AnycastClient", () => {
 
     it("getChannel: 詳細を取得する", async () => {
       const channel = { id: "ch-1", name: "Channel 1" };
-      mockFetchResponse(channel);
+      mockFetchResponse({ data: channel });
 
       const result = await client.getChannel("ch-1");
 
@@ -128,7 +128,7 @@ describe("AnycastClient", () => {
 
     it("updateChannel: チャンネルを更新する", async () => {
       const updated = { id: "ch-1", name: "Updated" };
-      mockFetchResponse(updated);
+      mockFetchResponse({ data: updated });
 
       const result = await client.updateChannel("ch-1", {
         name: "Updated",
@@ -144,7 +144,7 @@ describe("AnycastClient", () => {
 
     it("publishChannel: チャンネルを公開する", async () => {
       const published = { id: "ch-1", publishedAt: "2024-01-01" };
-      mockFetchResponse(published);
+      mockFetchResponse({ data: published });
 
       const result = await client.publishChannel("ch-1");
 
@@ -159,7 +159,7 @@ describe("AnycastClient", () => {
   describe("エピソード系", () => {
     it("listEpisodes: 一覧を取得する", async () => {
       const episodes = [{ id: "ep-1", title: "Episode 1" }];
-      mockFetchResponse(episodes);
+      mockFetchResponse({ data: episodes });
 
       const result = await client.listEpisodes("ch-1");
 
@@ -172,7 +172,7 @@ describe("AnycastClient", () => {
 
     it("getEpisode: 詳細を取得する", async () => {
       const episode = { id: "ep-1", title: "Episode 1" };
-      mockFetchResponse(episode);
+      mockFetchResponse({ data: episode });
 
       const result = await client.getEpisode("ch-1", "ep-1");
 
@@ -185,7 +185,7 @@ describe("AnycastClient", () => {
 
     it("createEpisode: エピソードを作成する", async () => {
       const episode = { id: "ep-1", title: "New Episode" };
-      mockFetchResponse(episode);
+      mockFetchResponse({ data: episode });
 
       const result = await client.createEpisode("ch-1", {
         title: "New Episode",
@@ -200,7 +200,7 @@ describe("AnycastClient", () => {
 
     it("updateEpisode: エピソードを更新する", async () => {
       const episode = { id: "ep-1", title: "Updated" };
-      mockFetchResponse(episode);
+      mockFetchResponse({ data: episode });
 
       const result = await client.updateEpisode("ch-1", "ep-1", {
         title: "Updated",
@@ -216,7 +216,7 @@ describe("AnycastClient", () => {
 
     it("publishEpisode: エピソードを公開する", async () => {
       const episode = { id: "ep-1", publishedAt: "2024-01-01" };
-      mockFetchResponse(episode);
+      mockFetchResponse({ data: episode });
 
       const result = await client.publishEpisode("ch-1", "ep-1");
 
@@ -283,7 +283,7 @@ describe("AnycastClient", () => {
   describe("マスタデータ系", () => {
     it("listCategories: カテゴリ一覧を取得する", async () => {
       const categories = [{ id: "cat-1", slug: "tech", name: "テクノロジー" }];
-      mockFetchResponse(categories);
+      mockFetchResponse({ data: categories });
 
       const result = await client.listCategories();
 
@@ -296,7 +296,7 @@ describe("AnycastClient", () => {
 
     it("listVoices: ボイス一覧を取得する", async () => {
       const voices = [{ id: "v-1", name: "Voice 1", provider: "google", gender: "female" }];
-      mockFetchResponse(voices);
+      mockFetchResponse({ data: voices });
 
       const result = await client.listVoices();
 
@@ -309,7 +309,7 @@ describe("AnycastClient", () => {
 
     it("listCharacters: キャラクター一覧を取得する", async () => {
       const characters = [{ id: "char-1", name: "Host" }];
-      mockFetchResponse(characters);
+      mockFetchResponse({ data: characters });
 
       const result = await client.listCharacters();
 

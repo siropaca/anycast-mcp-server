@@ -59,7 +59,8 @@ export class AnycastClient {
       throw await createApiError(response);
     }
 
-    return response.json() as Promise<T>;
+    const json = (await response.json()) as { data: T };
+    return json.data;
   }
 
   // --- チャンネル系 ---
@@ -245,12 +246,11 @@ export class AnycastClient {
     episodeId: string,
     data: GenerateScriptRequest,
   ): Promise<ScriptJob> {
-    const res = await this.request<{ data: ScriptJob }>(
+    return this.request(
       "POST",
       `/api/v1/channels/${channelId}/episodes/${episodeId}/script/generate-async`,
       data,
     );
-    return res.data;
   }
 
   /**
@@ -260,11 +260,7 @@ export class AnycastClient {
    * @returns 台本生成ジョブ
    */
   async getScriptJob(jobId: string): Promise<ScriptJob> {
-    const res = await this.request<{ data: ScriptJob }>(
-      "GET",
-      `/api/v1/script-jobs/${jobId}`,
-    );
-    return res.data;
+    return this.request("GET", `/api/v1/script-jobs/${jobId}`);
   }
 
   /**
@@ -278,10 +274,9 @@ export class AnycastClient {
     channelId: string,
     episodeId: string,
   ): Promise<ScriptLine[]> {
-    const res = await this.request<{ data: ScriptLine[] }>(
+    return this.request(
       "GET",
       `/api/v1/channels/${channelId}/episodes/${episodeId}/script/lines`,
     );
-    return res.data;
   }
 }

@@ -1,9 +1,13 @@
 #!/usr/bin/env node
 
+import { createRequire } from "node:module";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { AnycastClient } from "./client.js";
 import { registerAllTools } from "./tools/index.js";
+
+const require = createRequire(import.meta.url);
+const { version } = require("../package.json") as { version: string };
 
 // 環境変数のバリデーション
 const apiKey = process.env.ANYCAST_API_KEY;
@@ -23,7 +27,7 @@ if (!baseUrl) {
 const client = new AnycastClient(baseUrl, apiKey);
 const server = new McpServer({
   name: "anycast",
-  version: "0.1.0",
+  version,
 });
 
 // ツール登録

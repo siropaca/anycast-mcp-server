@@ -1,6 +1,6 @@
 # MCP ツール設計仕様書
 
-anycast-backend の REST API をラップする MCP ツールの設計仕様。
+anycast-backend の MCP ツール設計仕様。
 
 ---
 

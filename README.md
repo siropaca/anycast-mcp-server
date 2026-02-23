@@ -1,6 +1,6 @@
 # Anycast MCP Server
 
-[anycast-backend](https://github.com/siropaca/anycast-backend) の REST API をラップする MCP（Model Context Protocol）Server です。
+[anycast-backend](https://github.com/siropaca/anycast-backend) の MCP（Model Context Protocol）Server です。
 Claude Code などの MCP クライアントから anycast API を操作し、チャンネル作成やエピソード作成を行うために使用します。
 
 ## セットアップ
