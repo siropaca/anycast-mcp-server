@@ -39,6 +39,9 @@ anycast-backend の REST API をラップする MCP ツールの設計仕様。
 | `list_categories` | GET | カテゴリ一覧を取得 |
 | `list_voices` | GET | ボイス一覧を取得 |
 | `list_characters` | GET | 自分のキャラクター一覧を取得 |
+| `generate_script` | POST | 台本を非同期生成 |
+| `get_script_job` | GET | 台本生成ジョブの状態を取得 |
+| `list_script_lines` | GET | 台本行の一覧を取得 |
 
 ---
 
@@ -250,6 +253,56 @@ anycast-backend の REST API をラップする MCP ツールの設計仕様。
 - **エンドポイント**: `GET /api/v1/me/characters`
 - **入力パラメータ**: なし
 - **レスポンス**: キャラクター一覧（id, name, persona, voice）
+
+---
+
+### generate_script
+
+台本を非同期生成する。ジョブ ID を返すので、`get_script_job` で進捗を確認する。
+
+- **エンドポイント**: `POST /api/v1/channels/{channelId}/episodes/{episodeId}/script/generate-async`
+- **入力パラメータ**:
+
+| パラメータ | 型 | 必須 | 説明 |
+|-----------|-----|:----:|------|
+| channelId | string | ○ | チャンネル ID（UUID） |
+| episodeId | string | ○ | エピソード ID（UUID） |
+| prompt | string | ○ | 台本のテーマ（2000文字以内） |
+| durationMinutes | number | | 台本の長さ（分）。3〜30、デフォルト 10 |
+| withEmotion | boolean | | 感情付与するかどうか。デフォルト false |
+
+- **レスポンス**: 台本生成ジョブ（id, status, progress 等）
+
+---
+
+### get_script_job
+
+台本生成ジョブの状態を取得する。`status` が `completed` になったら `list_script_lines` で結果を取得できる。
+
+- **エンドポイント**: `GET /api/v1/script-jobs/{jobId}`
+- **入力パラメータ**:
+
+| パラメータ | 型 | 必須 | 説明 |
+|-----------|-----|:----:|------|
+| jobId | string | ○ | ジョブ ID（UUID） |
+
+- **レスポンス**: 台本生成ジョブ（id, status, progress, errorMessage 等）
+
+---
+
+### list_script_lines
+
+台本行の一覧を取得する。
+
+- **エンドポイント**: `GET /api/v1/channels/{channelId}/episodes/{episodeId}/script/lines`
+- **入力パラメータ**:
+
+| パラメータ | 型 | 必須 | 説明 |
+|-----------|-----|:----:|------|
+| channelId | string | ○ | チャンネル ID（UUID） |
+| episodeId | string | ○ | エピソード ID（UUID） |
+
+- **レスポンス**: 台本行一覧（id, lineOrder, speaker, text, emotion）
 
 ---
 

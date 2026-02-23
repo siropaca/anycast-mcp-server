@@ -7,6 +7,9 @@ import type {
   CreateEpisodeRequest,
   Episode,
   EpisodeSummary,
+  GenerateScriptRequest,
+  ScriptJob,
+  ScriptLine,
   UpdateChannelRequest,
   UpdateEpisodeRequest,
   Voice,
@@ -225,5 +228,60 @@ export class AnycastClient {
    */
   async listCharacters(): Promise<Character[]> {
     return this.request("GET", "/api/v1/me/characters");
+  }
+
+  // --- 台本系 ---
+
+  /**
+   * 台本を非同期生成する
+   *
+   * @param channelId - チャンネル ID
+   * @param episodeId - エピソード ID
+   * @param data - 台本生成リクエスト
+   * @returns 台本生成ジョブ
+   */
+  async generateScript(
+    channelId: string,
+    episodeId: string,
+    data: GenerateScriptRequest,
+  ): Promise<ScriptJob> {
+    const res = await this.request<{ data: ScriptJob }>(
+      "POST",
+      `/api/v1/channels/${channelId}/episodes/${episodeId}/script/generate-async`,
+      data,
+    );
+    return res.data;
+  }
+
+  /**
+   * 台本生成ジョブの状態を取得する
+   *
+   * @param jobId - ジョブ ID
+   * @returns 台本生成ジョブ
+   */
+  async getScriptJob(jobId: string): Promise<ScriptJob> {
+    const res = await this.request<{ data: ScriptJob }>(
+      "GET",
+      `/api/v1/script-jobs/${jobId}`,
+    );
+    return res.data;
+  }
+
+  /**
+   * 台本行の一覧を取得する
+   *
+   * @param channelId - チャンネル ID
+   * @param episodeId - エピソード ID
+   * @returns 台本行の一覧
+   */
+  async listScriptLines(
+    channelId: string,
+    episodeId: string,
+  ): Promise<ScriptLine[]> {
+    const res = await this.request<{ data: ScriptLine[] }>(
+      "GET",
+      `/api/v1/channels/${channelId}/episodes/${episodeId}/script/lines`,
+    );
+    return res.data;
   }
 }

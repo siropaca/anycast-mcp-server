@@ -91,3 +91,56 @@ export interface Character {
   persona: string;
   voice: Voice;
 }
+
+// 台本系
+
+export interface GenerateScriptRequest {
+  prompt: string;
+  durationMinutes?: number;
+  withEmotion?: boolean;
+}
+
+export interface ScriptJob {
+  id: string;
+  episodeId: string;
+  status:
+    | "pending"
+    | "processing"
+    | "canceling"
+    | "completed"
+    | "failed"
+    | "canceled";
+  progress: number;
+  prompt: string;
+  durationMinutes: number;
+  withEmotion: boolean;
+  episode?: {
+    id: string;
+    title: string;
+    channel?: { id: string; name: string };
+  } | null;
+  scriptLinesCount?: number | null;
+  errorMessage?: string | null;
+  errorCode?: string | null;
+  startedAt?: string | null;
+  completedAt?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Speaker {
+  id: string;
+  name: string;
+  persona: string;
+  voice: Voice;
+}
+
+export interface ScriptLine {
+  id: string;
+  lineOrder: number;
+  speaker: Speaker;
+  text: string;
+  emotion?: string | null;
+  createdAt: string;
+  updatedAt: string;
+}

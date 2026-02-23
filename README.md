@@ -88,6 +88,9 @@ pnpm typecheck   # 型チェック
 | `list_categories` | カテゴリ一覧を取得 |
 | `list_voices` | ボイス一覧を取得 |
 | `list_characters` | 自分のキャラクター一覧を取得 |
+| `generate_script` | 台本を非同期生成 |
+| `get_script_job` | 台本生成ジョブの状態を取得 |
+| `list_script_lines` | 台本行の一覧を取得 |
 
 詳細は [docs/specs/tool-design.md](docs/specs/tool-design.md) を参照。
 
@@ -104,7 +107,8 @@ pnpm typecheck   # 型チェック
 │       ├── index.ts      # 全ツール一括登録
 │       ├── channels.ts   # チャンネル系ツール
 │       ├── episodes.ts   # エピソード系ツール
-│       └── master.ts     # マスタデータ系ツール
+│       ├── master.ts     # マスタデータ系ツール
+│       └── scripts.ts    # 台本系ツール
 ├── docs/
 │   ├── adr/              # Architecture Decision Records
 │   └── specs/            # 設計仕様書

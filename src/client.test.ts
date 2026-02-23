@@ -228,6 +228,58 @@ describe("AnycastClient", () => {
     });
   });
 
+  describe("台本系", () => {
+    it("generateScript: 台本生成ジョブを開始する", async () => {
+      const job = { id: "job-1", status: "pending" };
+      mockFetchResponse({ data: job });
+
+      const result = await client.generateScript("ch-1", "ep-1", {
+        prompt: "AIの未来",
+        durationMinutes: 15,
+        withEmotion: true,
+      });
+
+      expect(result).toEqual(job);
+      expect(fetch).toHaveBeenCalledWith(
+        `${BASE_URL}/api/v1/channels/ch-1/episodes/ep-1/script/generate-async`,
+        expect.objectContaining({
+          method: "POST",
+          body: JSON.stringify({
+            prompt: "AIの未来",
+            durationMinutes: 15,
+            withEmotion: true,
+          }),
+        }),
+      );
+    });
+
+    it("getScriptJob: ジョブの状態を取得する", async () => {
+      const job = { id: "job-1", status: "completed", progress: 100 };
+      mockFetchResponse({ data: job });
+
+      const result = await client.getScriptJob("job-1");
+
+      expect(result).toEqual(job);
+      expect(fetch).toHaveBeenCalledWith(
+        `${BASE_URL}/api/v1/script-jobs/job-1`,
+        expect.anything(),
+      );
+    });
+
+    it("listScriptLines: 台本行一覧を取得する", async () => {
+      const lines = [{ id: "line-1", lineOrder: 1, text: "こんにちは" }];
+      mockFetchResponse({ data: lines });
+
+      const result = await client.listScriptLines("ch-1", "ep-1");
+
+      expect(result).toEqual(lines);
+      expect(fetch).toHaveBeenCalledWith(
+        `${BASE_URL}/api/v1/channels/ch-1/episodes/ep-1/script/lines`,
+        expect.anything(),
+      );
+    });
+  });
+
   describe("マスタデータ系", () => {
     it("listCategories: カテゴリ一覧を取得する", async () => {
       const categories = [{ id: "cat-1", slug: "tech", name: "テクノロジー" }];
