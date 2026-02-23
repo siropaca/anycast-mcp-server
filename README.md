@@ -64,7 +64,7 @@ pnpm typecheck   # 型チェック
       "args": ["/path/to/anycast-mcp-server/dist/index.js"],
       "env": {
         "ANYCAST_API_KEY": "ak_...",
-        "ANYCAST_BASE_URL": "https://api.example.com"
+        "ANYCAST_BASE_URL": "https://api.anycast.audio"
       }
     }
   }
