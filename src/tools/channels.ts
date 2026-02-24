@@ -90,6 +90,22 @@ export function registerChannelTools(
   );
 
   server.tool(
+    "set_user_prompt",
+    "チャンネルの台本プロンプトを設定する。台本生成時にこのプロンプトがデフォルトで使用される",
+    {
+      channelId: z.string().uuid().describe("チャンネル ID（UUID）"),
+      userPrompt: z
+        .string()
+        .max(2000)
+        .describe("台本プロンプト（2000文字以内）"),
+    },
+    ({ channelId, userPrompt }) =>
+      handleToolRequest(() =>
+        client.setUserPrompt(channelId, { userPrompt }),
+      ),
+  );
+
+  server.tool(
     "publish_channel",
     "チャンネルを公開状態にする",
     {

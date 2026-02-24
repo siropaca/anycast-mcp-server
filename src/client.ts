@@ -10,6 +10,7 @@ import type {
   GenerateScriptRequest,
   ScriptJob,
   ScriptLine,
+  SetUserPromptRequest,
   UpdateChannelRequest,
   UpdateEpisodeRequest,
   Voice,
@@ -106,6 +107,24 @@ export class AnycastClient {
     data: UpdateChannelRequest,
   ): Promise<Channel> {
     return this.request("PATCH", `/api/v1/channels/${channelId}`, data);
+  }
+
+  /**
+   * チャンネルの台本プロンプトを設定する
+   *
+   * @param channelId - チャンネル ID
+   * @param data - 台本プロンプト設定データ
+   * @returns 更新されたチャンネル
+   */
+  async setUserPrompt(
+    channelId: string,
+    data: SetUserPromptRequest,
+  ): Promise<Channel> {
+    return this.request(
+      "PUT",
+      `/api/v1/channels/${channelId}/user-prompt`,
+      data,
+    );
   }
 
   /**

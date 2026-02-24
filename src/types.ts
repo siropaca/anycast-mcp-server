@@ -4,6 +4,7 @@ export interface Channel {
   id: string;
   name: string;
   description: string | null;
+  userPrompt: string;
   categoryId: string;
   category: Category;
   characters: Character[];
@@ -39,6 +40,10 @@ export interface UpdateChannelRequest {
   name: string;
   description?: string;
   categoryId: string;
+}
+
+export interface SetUserPromptRequest {
+  userPrompt: string;
 }
 
 // エピソード系

@@ -1,6 +1,6 @@
 {
   "name": "anycast-mcp-server",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "MCP Server for anycast-backend REST API",
   "type": "module",
   "main": "dist/index.js",
