@@ -7,7 +7,7 @@ Claude Code などの MCP クライアントから anycast API を操作し、�
 
 ### 前提条件
 
-- Node.js >= 22
+- Node.js 24.13.1（mise で管理）
 - anycast-backend の API キー（`ak_` プレフィックス）を取得済みであること
 
 ### 環境変数
