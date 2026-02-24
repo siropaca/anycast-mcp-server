@@ -69,6 +69,10 @@ Claude Code エージェントがチャンネル作成・エピソード作成�
 - ユーザーから指示があるまでコミットやプッシュを行わない
 - ブランチを新規作成する際は、必ずユーザーに確認を取ってから作成する
 - PR 作成時は `.github/PULL_REQUEST_TEMPLATE.md` をテンプレートとして使用する
+- コミットメッセージは Conventional Commits 形式を使う
+  - 形式: `type: description`
+  - 使用する type: `feat`, `fix`, `docs`, `chore`, `refactor`, `test`
+  - 破壊的変更がある場合はコミット本文に `BREAKING CHANGE:` を含める
 
 ## 用語
 

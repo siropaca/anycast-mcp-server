@@ -13,6 +13,7 @@ ADR（Architecture Decision Record）は、アーキテクチャ上の重要な�
 |------|----------|------------|
 | [001](001-mcp-server-approach.md) | MCP Server による API 連携の採用 | Accepted |
 | [002](002-typescript-mcp-sdk.md) | TypeScript + MCP SDK の採用 | Accepted |
+| [003](003-release-please.md) | Release Please によるリリース自動化の採用 | Accepted |
 
 ## ステータス
 

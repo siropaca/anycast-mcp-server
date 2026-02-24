@@ -68,6 +68,42 @@ pnpm test:watch     # テストのウォッチモード
 pnpm typecheck      # 型チェック
 ```
 
+## リリース
+
+[Release Please](https://github.com/googleapis/release-please) を使用してリリースを自動化しています。
+
+### Conventional Commits
+
+コミットメッセージは [Conventional Commits](https://www.conventionalcommits.org/ja/) に準拠してください。
+コミットの種別に応じてバージョンが自動決定されます。
+
+| プレフィックス | 説明 | バージョン |
+|----------------|------|------------|
+| `feat:` | 新機能の追加 | minor |
+| `fix:` | バグ修正 | patch |
+| `docs:` | ドキュメントの変更 | - |
+| `chore:` | ビルド・CI などの雑務 | - |
+| `refactor:` | リファクタリング | - |
+| `test:` | テストの追加・修正 | - |
+
+破壊的変更がある場合はコミット本文に `BREAKING CHANGE:` を含めてください（major バージョンが上がります）。
+
+### リリースフロー
+
+1. `main` ブランチに Conventional Commits 形式のコミットがマージされる
+2. Release Please が自動で Release PR を作成（バージョン更新 + CHANGELOG 生成）
+3. Release PR をレビュー・マージすると GitHub Release が作成される
+4. Release イベントをトリガーに GitHub Actions が `npm publish` を実行する
+
+### 手動リリース
+
+通常は上記の自動フローを使用しますが、緊急時は以下の手順で手動リリースが可能です:
+
+```bash
+pnpm build
+npm publish
+```
+
 ## 関連リポジトリ
 
 - [anycast-backend](https://github.com/siropaca/anycast-backend)
